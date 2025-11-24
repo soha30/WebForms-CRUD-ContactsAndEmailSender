@@ -1,0 +1,178 @@
+
+# WebForms-CRUD-ContactsAndEmailSender
+
+An ASP.NET Web Forms application demonstrating contact management (CRUD), data display using Web Forms controls, and sending emails with attachments.
+The project focuses on clean structure and reusability by placing most database and email logic inside custom helper classes located in the **App_Code** folder.
+
+---
+
+## 1. Project Overview
+
+This project was built as a practical learning exercise to:
+
+* Implement full CRUD operations (Create, Read, Update, Delete) for contact records.
+* Use SQL Server as a backend with a centralized connection string in `Web.config`.
+* Display data in controls such as **GridView** and **DropDownList**.
+* Send emails with file attachments using an SMTP configuration.
+* Reuse logic by organizing database and email functionality into dedicated helper classes rather than writing repetitive code inside each page.
+
+---
+
+## 2. Main Features
+
+* Contact management form with fields for ID, first name, last name, cell, email, and country.
+* Buttons to:
+
+  * Insert a new contact
+  * Retrieve and display an existing contact
+  * Update a contact
+  * Delete a contact
+* Phone directory display page.
+* Email sending page with:
+
+  * Sender email
+  * Subject and message fields
+  * File attachments
+  * Two sending options (via helper class or direct code-behind)
+* A structured Web Forms layout using a master page and content pages.
+* Configuration-driven behavior using `Web.config`.
+
+---
+
+## 3. Solution Structure
+
+### **App_Code Folder**
+
+This folder contains the main helper classes used throughout the project.
+
+---
+
+### 🔹 **CRUD Class (Custom, Fully Developed)**
+
+A comprehensive data-access utility class that you created to consolidate most common SQL Server operations into one reusable location.
+Its responsibilities include:
+
+* Managing SQL connections using a single connection string from `Web.config`.
+* Executing different types of commands:
+
+  * SQL queries that return data readers.
+  * Queries that return DataTables or DataSets.
+  * Stored procedures (with and without parameters).
+  * Insert/Update/Delete operations returning affected rows.
+  * Commands that return identity values for inserted rows.
+* User-related checks such as:
+
+  * Verifying if a user already exists.
+  * Authenticating users based on form input.
+* UI helper functions for:
+
+  * Populating **DropDownList** controls.
+  * Populating **GridView** controls (via reader or DataTable).
+* Utility methods for connection pool cleanup.
+
+This class acts as a **personal mini-library** for all CRUD and data-binding operations in Web Forms, reducing repeated ADO.NET code across the application.
+
+---
+
+### 🔹 **mailMgr Class (Imported and Customized)**
+
+The `mailMgr` class was originally taken from an external educational resource, then **modified and adapted** to fit the structure of this project.
+
+Its responsibilities include:
+
+* Reading SMTP and email configuration settings from `Web.config`.
+* Building email messages with:
+
+  * Sender information
+  * Subject
+  * Body text
+  * Optional file attachments
+* Sending the email using the SMTP settings.
+* Returning success or error feedback to the calling page.
+
+It is used in `sendEmail.aspx` to simplify the sending process and maintain cleaner page code.
+
+> Note: The class is not fully self-developed — it was imported then customized for this project.
+
+---
+
+## 4. Project Pages
+
+### **myServiceControl.aspx**
+
+Main CRUD page for managing contact information. Includes:
+
+* Form inputs for contact details.
+* Buttons for Insert, Show, Update, and Delete.
+* GridView for displaying stored data.
+* All logic is powered by the CRUD helper class.
+
+---
+
+### **phoneDirectory.aspx**
+
+A directory-style page listing stored contacts using CRUD methods.
+
+---
+
+### **ServiceControl.aspx**
+
+A supporting page that interacts with the same CRUD logic for service-related operations.
+
+---
+
+### **sendEmail.aspx**
+
+A dedicated page for sending emails:
+
+* Sender email, subject, and message fields.
+* File attachment upload.
+* Send button using:
+
+  * `mailMgr` class
+  * or direct code-behind as a comparison option.
+
+---
+
+### Shared Files
+
+* **Default.aspx, About.aspx, Contact.aspx** – Standard content pages.
+* **Site.Master** – Master layout for consistent design.
+* **Web.config** – SMTP settings, connection strings, and global configuration.
+* **Global.asax** – Application-level event handler.
+* **Content, Scripts** – CSS/JS assets.
+
+---
+
+## 5. Technologies Used
+
+* ASP.NET Web Forms (C#)
+* SQL Server / SQL Express
+* ADO.NET (connections, commands, readers, datasets)
+* SMTP email sending
+* Web.config configuration management
+* Web Forms server controls:
+
+  * TextBox, DropDownList, Button, GridView, FileUpload, Label
+
+---
+
+## 6. Key Learning Outcomes
+
+This project demonstrates practical experience in:
+
+* Structuring a Web Forms application with a master page.
+* Creating a robust custom CRUD utility class for centralized data access.
+* Importing and customizing email-sending logic via a helper class.
+* Working with SQL Server using several ADO.NET techniques.
+* Binding data to ASP.NET UI controls efficiently.
+* Managing sensitive settings in `Web.config`.
+* Implementing real-world functionality such as email sending with attachments.
+
+---
+
+## 7. Author
+
+Developed by **Soha Abdurahman** as a personal project to consolidate frequently used database and email operations into reusable helper classes, and to apply them in a working ASP.NET Web Forms environment.
+
+
